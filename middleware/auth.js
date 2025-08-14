@@ -53,35 +53,41 @@ export const generarToken = (userId) => {
   );
 };
 
-// Middleware para Next.js API routes
+// Middleware para Next.js API routes (App Router)
 export const withAuth = (handler) => {
-  return async (req, res) => {
+  return async (req, context) => {
     const authResult = await verificarToken(req);
     
     if (authResult.error) {
-      return res.status(authResult.status).json({ 
+      return new Response(JSON.stringify({ 
         success: false, 
         message: authResult.error 
+      }), {
+        status: authResult.status,
+        headers: { 'Content-Type': 'application/json' }
       });
     }
     
     req.usuario = authResult.usuario;
-    return handler(req, res);
+    return handler(req, context);
   };
 };
 
 export const withAdminAuth = (handler) => {
-  return async (req, res) => {
+  return async (req, context) => {
     const authResult = await verificarAdmin(req);
     
     if (authResult.error) {
-      return res.status(authResult.status).json({ 
+      return new Response(JSON.stringify({ 
         success: false, 
         message: authResult.error 
+      }), {
+        status: authResult.status,
+        headers: { 'Content-Type': 'application/json' }
       });
     }
     
     req.usuario = authResult.usuario;
-    return handler(req, res);
+    return handler(req, context);
   };
 };

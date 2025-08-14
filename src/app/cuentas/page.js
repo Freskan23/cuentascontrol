@@ -495,31 +495,18 @@ const FormularioCuenta = ({ cuenta, onClose, onSuccess }) => {
     provincia: cuenta?.provincia || '',
     ciudad: cuenta?.ciudad || '',
     comentarios: cuenta?.comentarios || '',
-    infoTecnica: {
-      ip: cuenta?.infoTecnica?.ip || '',
-      emulador: cuenta?.infoTecnica?.emulador || '',
-      tipoDispositivo: cuenta?.infoTecnica?.tipoDispositivo || 'android'
-    }
+    ip: cuenta?.ip || '',
+    emulador: cuenta?.emulador || '',
+    tipoDispositivo: cuenta?.tipoDispositivo || 'android'
   });
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name.startsWith('infoTecnica.')) {
-      const field = name.split('.')[1];
-      setFormData(prev => ({
-        ...prev,
-        infoTecnica: {
-          ...prev.infoTecnica,
-          [field]: value
-        }
-      }));
-    } else {
-      setFormData(prev => ({
-        ...prev,
-        [name]: value
-      }));
-    }
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -615,10 +602,10 @@ const FormularioCuenta = ({ cuenta, onClose, onSuccess }) => {
               </label>
               <input
                 type="text"
-                name="infoTecnica.ip"
+                name="ip"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="192.168.1.1"
-                value={formData.infoTecnica.ip}
+                value={formData.ip}
                 onChange={handleChange}
               />
             </div>
@@ -628,10 +615,10 @@ const FormularioCuenta = ({ cuenta, onClose, onSuccess }) => {
               </label>
               <input
                 type="text"
-                name="infoTecnica.emulador"
+                name="emulador"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="BlueStacks, LDPlayer, etc."
-                value={formData.infoTecnica.emulador}
+                value={formData.emulador}
                 onChange={handleChange}
               />
             </div>
@@ -640,14 +627,15 @@ const FormularioCuenta = ({ cuenta, onClose, onSuccess }) => {
                 Tipo de Dispositivo
               </label>
               <select
-                name="infoTecnica.tipoDispositivo"
+                name="tipoDispositivo"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                value={formData.infoTecnica.tipoDispositivo}
+                value={formData.tipoDispositivo}
                 onChange={handleChange}
               >
                 <option value="android">Android</option>
                 <option value="ios">iOS</option>
-                <option value="web">Web</option>
+                <option value="desktop">Desktop</option>
+                <option value="otro">Otro</option>
               </select>
             </div>
             <div>

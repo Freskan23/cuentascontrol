@@ -5,7 +5,7 @@ import Cuenta from '../../../../models/Cuenta.js';
 import { procesarCSVCuentas } from '../../../../utils/csvProcessor.js';
 
 // GET - Obtener cuentas del usuario
-export const GET = withAuth(async (req) => {
+const getHandler = async (req) => {
   try {
     await connectDB();
     
@@ -96,10 +96,10 @@ export const GET = withAuth(async (req) => {
       { status: 500 }
     );
   }
-});
+};
 
 // POST - Crear nueva cuenta
-export const POST = withAuth(async (req) => {
+const postHandler = async (req) => {
   try {
     await connectDB();
     
@@ -166,4 +166,8 @@ export const POST = withAuth(async (req) => {
       { status: 500 }
     );
   }
-});
+};
+
+// Exportar las funciones con middleware
+export const GET = withAuth(getHandler);
+export const POST = withAuth(postHandler);

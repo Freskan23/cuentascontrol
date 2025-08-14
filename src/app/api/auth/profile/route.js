@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { withAuth } from '../../../../../middleware/auth.js';
 
-export const GET = withAuth(async (req) => {
+const getHandler = async (req) => {
   try {
     // El usuario ya está disponible en req.usuario gracias al middleware
     const usuarioRespuesta = {
@@ -26,9 +26,9 @@ export const GET = withAuth(async (req) => {
       { status: 500 }
     );
   }
-});
+};
 
-export const PUT = withAuth(async (req) => {
+const putHandler = async (req) => {
   try {
     const { nombre } = await req.json();
     
@@ -74,4 +74,8 @@ export const PUT = withAuth(async (req) => {
       { status: 500 }
     );
   }
-});
+};
+
+// Exportar las funciones con middleware
+export const GET = withAuth(getHandler);
+export const PUT = withAuth(putHandler);
